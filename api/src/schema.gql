@@ -1,0 +1,102 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: Float!
+  name: String!
+  total: Int!
+  cost: Float!
+  cart: [Cart!]
+  addedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Cart {
+  id: Float!
+  productName: String
+  quantity: Float!
+  unitCost: Float
+  totalCost: Float!
+  userId: Int!
+  productId: Int!
+  product: Product!
+  user: User!
+  addedAt: DateTime!
+}
+
+type User {
+  id: Float!
+  name: String!
+  email: String!
+  password: String!
+  createdAt: DateTime!
+  carts: [Cart!]
+}
+
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
+type Query {
+  users: [User!]!
+  user(email: String!): User!
+  products: [Product!]!
+  product(id: Int!): Product!
+  carts: [Cart!]!
+  cart(id: Int!): Cart!
+  login(loginInput: LoginUserInput!): LoginResponse!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(id: Int!): Product!
+  createCart(createCartInput: CreateCartInput!): Cart!
+  updateCart(updateCart: UpdateCartInput!): Cart!
+  removeCart(id: Int!): Cart!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input CreateProductInput {
+  name: String!
+  total: Float!
+  cost: Int!
+}
+
+input UpdateProductInput {
+  name: String
+  total: Float
+  cost: Int
+  id: Float!
+}
+
+input CreateCartInput {
+  productId: Float!
+  quantity: Float!
+  userId: Float!
+}
+
+input UpdateCartInput {
+  productId: Float
+  quantity: Float!
+  userId: Float
+  id: Float!
+}
