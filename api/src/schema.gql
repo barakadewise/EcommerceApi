@@ -31,8 +31,9 @@ type Cart {
 
 type User {
   id: Float!
-  name: String!
+  name: String
   email: String!
+  address: String
   password: String!
   createdAt: DateTime!
   carts: [Cart!]
@@ -61,6 +62,7 @@ input LoginUserInput {
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   removeUser(id: Int!): User!
+  updateUser(updateUser: UpdateUserInput!): User!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): Product!
@@ -70,9 +72,16 @@ type Mutation {
 }
 
 input CreateUserInput {
-  name: String!
+  name: String
   email: String!
   password: String!
+}
+
+input UpdateUserInput {
+  name: String!
+  email: String!
+  password: String
+  adress: String!
 }
 
 input CreateProductInput {

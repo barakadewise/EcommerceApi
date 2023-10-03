@@ -1,8 +1,8 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from '../services/auth.service';
 import { LoginResponse } from '../dto/login-response';
 import { LoginUserInput } from '../dto/login-user-iputs';
-import { UnauthorizedException, UseGuards } from '@nestjs/common'
+import { UnauthorizedException} from '@nestjs/common'
 
 
 
@@ -11,20 +11,20 @@ import { UnauthorizedException, UseGuards } from '@nestjs/common'
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
-   
 
-    ) { }
+
+  ) { }
 
   @Query(() => LoginResponse)
-  async login(@Args('loginInput') loginInput: LoginUserInput):Promise<LoginResponse>{
-    const user= await this.authService.validateUser(
+  async login(@Args('loginInput') loginInput: LoginUserInput): Promise<LoginResponse> {
+    const user = await this.authService.validateUser(
       loginInput.email,
       loginInput.password
     )
-    if(!user){
+    if (!user) {
       throw new UnauthorizedException('Invalid credentials...')
     }
     return this.authService.login(user)
-    
+
   }
 }

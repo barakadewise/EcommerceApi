@@ -9,13 +9,17 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column({ unique: true, nullable: false })
+  @Field({nullable:true})
+  @Column({ nullable: true })
   name: string;
 
   @Field()
   @Column({ unique: true, nullable: false })
   email: string;
+
+  @Field({nullable:true})
+  @Column({nullable:true})
+  address:string;
 
   @Field()
   @Column({ nullable: false })

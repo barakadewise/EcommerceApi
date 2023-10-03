@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserInput } from '../dto/create-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm'
 import { User } from '../entities/user.entity';
+import { UpdateUserInput } from '../dto/update-user.input';
 
 
 
@@ -13,17 +14,17 @@ export class UserService {
   ) { }
 
   //function to create user
-  async createUser(userInput: CreateUserInput): Promise<User | string> {
-    const userExist = await this.userRepository.findOne({ where: { name: userInput.name } })
+  async createUser(userInput: CreateUserInput): Promise<User> {
+    const userExist = await this.userRepository.findOne({ where: { email: userInput.email } })
     try {
       if (userExist) {
-        return `{ ${userInput.name} Already taken try another.}`
+        throw new UnauthorizedException();
       }
       const newUser = this.userRepository.create(userInput)
       return this.userRepository.save(newUser);
 
     } catch {
-      throw new Error('): Something went wrong!')
+      throw new Error('User exist')
     }
 
   }
@@ -42,5 +43,22 @@ export class UserService {
   //dete user from the database 
   async removeUser(id: number): Promise<DeleteResult> {
     return this.userRepository.delete(id)
+  }
+
+  //update user profila data 
+  async updateUser(updateUserInput: UpdateUserInput): Promise<UpdateUserInput> {
+    try {
+      const userExist = await this.userRepository.findOne({ where: { email: updateUserInput.email } });
+      if (!userExist) {
+        throw new Error('User not found!')
+      }
+      await this.userRepository.update(userExist.id, updateUserInput);
+      return updateUserInput;
+
+    } catch (error
+    ) {
+      throw error;
+
+    }
   }
 }
