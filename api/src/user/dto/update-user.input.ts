@@ -8,7 +8,7 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   
   @Field()
   email?: string;
-  
+
   @Field()
-  adress:string;
+  address:string;
 }

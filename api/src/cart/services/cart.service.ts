@@ -63,12 +63,12 @@ export class CartService {
 
   //find cart by its id
   async findOne(id: number) {
-    return `This action returns a #${id} cart`;
+    return this.cartRepository.findOne({where:{id:id}})
   }
 
 
   //delete cart by its id
   async remove(id: number) {
-    return `This action removes a #${id} cart`;
+    return this.cartRepository
   }
 }

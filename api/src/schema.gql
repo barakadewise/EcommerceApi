@@ -81,7 +81,7 @@ input UpdateUserInput {
   name: String!
   email: String!
   password: String
-  adress: String!
+  address: String!
 }
 
 input CreateProductInput {

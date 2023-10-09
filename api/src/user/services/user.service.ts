@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm'
 import { User } from '../entities/user.entity';
 import { UpdateUserInput } from '../dto/update-user.input';
+import { use } from 'passport';
+import { json } from 'stream/consumers';
 
 
 
@@ -15,18 +17,17 @@ export class UserService {
 
   //function to create user
   async createUser(userInput: CreateUserInput): Promise<User> {
-    const userExist = await this.userRepository.findOne({ where: { email: userInput.email } })
-    try {
-      if (userExist) {
-        throw new UnauthorizedException();
-      }
-      const newUser = this.userRepository.create(userInput)
-      return this.userRepository.save(newUser);
+    const user = await this.userRepository.findOne({ where: { email: userInput.email } })
 
-    } catch {
-      throw new Error('User exist')
+    if (user) {
+      throw new UnauthorizedException('User with this email already exist!');  
     }
+    
+    const addUser =
+      this.userRepository.create({ ...userInput })
+    await this.userRepository.save(addUser);
 
+    return addUser
   }
 
   //fetch all users from the database

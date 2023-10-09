@@ -5,6 +5,9 @@ import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, JoinColumn, O
 @ObjectType()
 @Entity('users')
 export class User {
+  save() {
+    throw new Error('Method not implemented.');
+  }
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
