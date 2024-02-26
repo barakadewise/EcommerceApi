@@ -18,7 +18,7 @@ import { LoginResponse } from './dto/login-response';
     UserModule,
     JwtModule.register({
       secret: 'lukumay',
-      signOptions: { expiresIn: '1000s' }
+      signOptions: { expiresIn: '1d' }
     })
   ],
 

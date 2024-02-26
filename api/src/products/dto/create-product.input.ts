@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { Column } from 'typeorm';
+
 
 @InputType()
 export class CreateProductInput {
@@ -8,8 +8,10 @@ export class CreateProductInput {
 
   @Field({ nullable: false })
   total: number;
-  
-  @Field(()=>Int)
-  cost:number;
+
+  @Field()
+  cost: number;
+
+
 
 }

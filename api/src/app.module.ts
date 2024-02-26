@@ -9,6 +9,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
+import { ProductImageModule } from './product-image/product-image.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -29,11 +31,12 @@ import { AuthModule } from './auth/auth.module';
       logging: true
 
     }),
+  
     UserModule,
     ProductsModule,
     CartModule,
-    AuthModule],
-
+    AuthModule,
+    ProductImageModule],
   controllers: [AppController],
   providers: [AppService],
 })

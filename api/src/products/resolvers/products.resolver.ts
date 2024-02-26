@@ -4,6 +4,8 @@ import { Product } from '../entities/product.entity';
 import { CreateProductInput } from '../dto/create-product.input';
 import { UpdateProductInput } from '../dto/update-product.input';
 
+
+
 @Resolver(() => Product)
 export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) { }
@@ -28,13 +30,17 @@ export class ProductsResolver {
 
   //update the product details
   @Mutation(() => Product)
-  updateProduct(@Args('updateProductInput') updateProductInput: UpdateProductInput) {
-    return this.productsService.update(updateProductInput.id, updateProductInput);
+  async updateProduct(@Args('updateProductInput') updateProductInput: UpdateProductInput): Promise<UpdateProductInput> {
+    return this.productsService.update(updateProductInput);
   }
 
   //Delete product
   @Mutation(() => Product)
-  async removeProduct(@Args('id', { type: () => Int }) id: number) {
+  async removeProduct(@Args('id', { type: () => Int }) id: number): Promise<Product> {
     return this.productsService.remove(id);
   }
+
+
+
+
 }

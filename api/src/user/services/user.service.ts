@@ -4,8 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm'
 import { User } from '../entities/user.entity';
 import { UpdateUserInput } from '../dto/update-user.input';
-import { use } from 'passport';
-import { json } from 'stream/consumers';
+
 
 
 

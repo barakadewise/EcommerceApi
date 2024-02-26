@@ -87,14 +87,14 @@ input UpdateUserInput {
 input CreateProductInput {
   name: String!
   total: Float!
-  cost: Int!
+  cost: Float!
 }
 
 input UpdateProductInput {
   name: String
   total: Float
-  cost: Int
-  id: Float!
+  cost: Float
+  id: Float
 }
 
 input CreateCartInput {

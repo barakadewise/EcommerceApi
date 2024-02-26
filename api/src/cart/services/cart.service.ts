@@ -67,8 +67,8 @@ export class CartService {
   }
 
 
-  //delete cart by its id
+  //delete cart from the db
   async remove(id: number) {
-    return this.cartRepository
+    return this.cartRepository.delete({id:id})
   }
 }
