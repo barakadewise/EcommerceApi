@@ -18,7 +18,7 @@ export class CartService {
   //create cart function //
   async createCart(input: CreateCartInput): Promise<Cart> {
     const product = await this.productService.findOneProduct(input.productId)
-    
+
     const productExistInCart = await this.cartRepository.findOne({
       where: {
         productId: input.productId,
@@ -51,24 +51,24 @@ export class CartService {
     await this.cartRepository.save(getCart);
     await this.cartRepository.update(updateCartInput.id, updateCartInput);
     return updateCartInput;
-    
+
 
   }
 
   //fetch all carts function
   async findAllCarts(): Promise<Cart[]> {
-    return this.cartRepository.find({order:{addedAt:'DESC'}})
+    return this.cartRepository.find({ order: { addedAt: 'DESC' } })
 
   }
 
   //find cart by its id
   async findOne(id: number) {
-    return this.cartRepository.findOne({where:{id:id}})
+    return this.cartRepository.findOne({ where: { id: id } })
   }
 
 
   //delete cart from the db
   async remove(id: number) {
-    return this.cartRepository.delete({id:id})
+    return this.cartRepository.delete({ id: id })
   }
 }

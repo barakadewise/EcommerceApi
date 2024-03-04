@@ -18,16 +18,14 @@ export class ProductImageService {
             if (!image) {
                 throw new BadRequestException('Failed to upload product!');
             }
-            console.log(image)
-            console.log(productImageInputDto)
             console.log("Successfully Uploaded!");
-
+            const imageUrl = `http://localhost:3000/product-image-controller/product/${image.filename}`
             const addProductImage = this.productImageRepository.create({
                 name: productImageInputDto.name,
                 quantity: productImageInputDto.quantity,
                 cost: productImageInputDto.cost,
                 path: image.path,
-                imgUrl: image.filename,
+                imgUrl: imageUrl,
             });
             console.log(addProductImage);
             return await this.productImageRepository.save(addProductImage);

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseFilePipeBuilder, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProductImageDto } from '../dto/product-image-dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -6,6 +6,7 @@ import { extname } from 'path';
 import { ProductImageService } from '../services/product-image.service';
 import { ApiResponse } from '@nestjs/swagger';
 import { ProductImage } from '../entities/product-image.entity';
+import { Response } from 'express'
 
 export const storage = {
 
@@ -29,7 +30,6 @@ export class ProductImageController {
     //End point for product and image upload
     @Post('product')
     @ApiResponse({ status: 201, description: 'File uploaded successfully' })
-    @ApiResponse({ status: 400, description: 'Invalid file type. Only JPG files are allowed' })
     @UseInterceptors(FileInterceptor('image', storage))
 
     async uploadFile(
@@ -44,9 +44,16 @@ export class ProductImageController {
 
     }
 
+    @Get('product/:filename')
+    async getUploads(@Param('filename') filename, @Res() res: Response) {
+        res.sendFile(filename, { root: './images' })
+
+    }
+
+
     //return the list of all products
     @Get('products')
-    async findAllProducts():Promise<ProductImage[]>{
+    async findAllProducts(): Promise<ProductImage[]> {
         return (await this.productImageService.findAllProduct());
     }
 
